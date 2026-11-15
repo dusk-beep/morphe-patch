@@ -1,0 +1,11 @@
+[versions]
+morphe-patcher = "2.3.0"
+#noinspection GradleDependency
+smali = "4220ae75f7"
+gson = "2.15.0"
+
+[libraries]
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+# Gradle plugin adds the dependency during the build; this alias is kept for dependency tooling.
+#noinspection UnusedVersionCatalogEntry
+morphe-patcher = { module = "app.morphe:morphe-patcher", version.ref = "morphe-patcher" }
