@@ -14,4 +14,5 @@ patches {
 
 dependencies {
     compileOnly(libs.gson)
+    implementation("app.morphe:morphe-patches-library:2.1.1")
 }
