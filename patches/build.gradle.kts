@@ -4,7 +4,7 @@ patches {
     about {
         name = "Focus Guard Patches"
         description = "Small, targeted patches that add friction to disabling selected focus tools."
-        source = "https://github.com/your-name/focus-guard-patches"
+        source = "https://github.com/dusk-beep/focus-guard-patches"
         author = "Focus Guard contributors"
         contact = "Open an issue in the repository"
         website = "https://github.com/dusk-beep/focus-guard-patches"
@@ -14,5 +14,5 @@ patches {
 
 dependencies {
     compileOnly(libs.gson)
-    implementation("app.morphe:morphe-patches-library:2.1.1")
+    implementation(libs.morphe.patchesLib)
 }

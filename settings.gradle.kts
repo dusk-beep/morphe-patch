@@ -1,4 +1,3 @@
-
 rootProject.name = "focus-guard-patches"
 
 pluginManagement {
@@ -14,7 +13,7 @@ pluginManagement {
                     ?: System.getenv("GITHUB_ACTOR")
                     ?: System.getenv("GPR_USER")
                 password = providers.gradleProperty("gpr.key").orNull
-                    ?: System.getenv("GITHUB_TOKEN")
+                    ?: System.getenv("GH_TOKEN")
                     ?: System.getenv("GPR_KEY")
             }
         }
@@ -48,6 +47,5 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("app.morphe.patches") version "2.1.0"
+    id("app.morphe.patches") version "2.1.1"
 }
-
