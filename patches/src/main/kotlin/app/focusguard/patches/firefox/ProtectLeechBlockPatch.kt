@@ -22,7 +22,7 @@ val protectLeechBlockPatch = bytecodePatch(
         Compatibility(
             packageName = "org.mozilla.firefox",
             name = "Firefox",
-            targets = listOf(AppTarget(version = "160.0")),
+            targets = listOf(AppTarget(version = null)),
         )
     )
 
