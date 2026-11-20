@@ -97,7 +97,7 @@ val protectLeechBlockPatch = bytecodePatch(
                 name == originalPrivateBrowsing.name &&
                     parameters == originalPrivateBrowsing.parameters &&
                     returnType == originalPrivateBrowsing.returnType -> {
-                    cloneMutable(additionalRegisters = 2).also {
+                    cloneMutable(additionalRegisters = 7).also {
                         protectedPrivateBrowsing = it
                     }
                 }
