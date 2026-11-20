@@ -39,7 +39,7 @@ dependencyResolutionManagement {
                     ?: System.getenv("GITHUB_ACTOR")
                     ?: System.getenv("GPR_USER")
                 password = providers.gradleProperty("gpr.key").orNull
-                    ?: System.getenv("GITHUB_TOKEN")
+                    ?: System.getenv("GH_TOKEN")
                     ?: System.getenv("GPR_KEY")
             }
         }
