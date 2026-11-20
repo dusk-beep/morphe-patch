@@ -37,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-        run: gradlew :patches:buildAndroid --no-daemon
+        run: gradle :patches:buildAndroid --no-daemon
 
       - name: Standardize .mpp filename
         run: |
