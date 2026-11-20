@@ -20,28 +20,59 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4 # FIXED: v4 is the current stable version
 
       - name: Set up Java
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v4 # FIXED: v4 is the current stable version
         with:
           distribution: temurin
           java-version: "21"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v4 # FIXED: v4 is the current stable version
         with:
-          gradle-version: "9.8.2"
+          gradle-version: "8.10" # FIXED: 9.8.2 does not exist yet. Use "8.10" or "wrapper"
 
       - name: Build Morphe patch bundle
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-        run: gradle :patches:buildAndroid --no-daemon
+        run: ./gradlew :patches:buildAndroid --no-daemon # Use ./gradlew for reliability
+
+      - name: Standardize .mpp filename
+        run: |
+          # Find the generated .mpp file and copy it to a consistent name 
+          # so the /latest/ download URL never breaks.
+          find patches/build/libs -name "*.mpp" -exec cp {} patches/build/libs/focus-guard-patches.mpp \;
+
+      - name: Generate patches-bundle.json
+        run: |
+          TAG_NAME="${{ inputs.tag || github.ref_name }}"
+          
+          cat <<EOF > patches-bundle.json
+          {
+            "version": "${TAG_NAME#v}",
+            "created_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "description": "Release ${TAG_NAME} of Focus Guard Patches",
+            "download_url": "https://github.com/${{ github.repository }}/releases/latest/download/focus-guard-patches.mpp",
+            "signature_download_url": ""
+          }
+          EOF
+
+      - name: Commit metadata to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add patches-bundle.json
+          # [skip ci] prevents this commit from triggering another workflow
+          git commit -m "chore: update patches-bundle.json for ${TAG_NAME} [skip ci]" || echo "No changes to commit"
+          git push
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2 # FIXED: v2 is the current stable version
         with:
           tag_name: ${{ inputs.tag || github.ref_name }}
           generate_release_notes: true
-          files: patches/build/libs/*.mpp
+          files: |
+            patches/build/libs/focus-guard-patches.mpp
+            patches-bundle.json
