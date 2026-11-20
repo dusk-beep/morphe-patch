@@ -28,31 +28,32 @@ val dnsFilterPatch =
         description = "Forces a custom DNS-over-HTTPS resolver in strict mode.",
         default = false,
     ) {
-        compatibleWith(
-            Compatibility(
-                packageName = "org.mozilla.firefox",
-                name = "Firefox",
-                targets = listOf(AppTarget(version = null)),
-            ),
-        )
+      compatibleWith(
+          Compatibility(
+              packageName = "org.mozilla.firefox",
+              name = "Firefox",
+              targets = listOf(AppTarget(version = null)),
+          ),
+      )
 
-        val options = dnsFilterOptions()
+      val options = dnsFilterOptions()
 
-        execute {
-            val url = options.url
+      execute {
+        val url = options.url
 
-            // Force GeckoView to use the custom resolver exclusively.
-            forceGeckoViewDns(url)
+        // Force GeckoView to use the custom resolver exclusively.
+        forceGeckoViewDns(url)
 
-            // Make Firefox report maximum DNS protection.
-            val getMode = getDohSettingsModeFingerprint.method
+        // Make Firefox report maximum DNS protection.
+        val getMode = getDohSettingsModeFingerprint.method
 
-            getMode.addInstructions(
-                0,
-                """
+        getMode.addInstructions(
+            0,
+            """
                 sget-object v0, $DOH_SETTINGS_MODE->MAX:$DOH_SETTINGS_MODE
                 return-object v0
-                """.trimIndent(),
-            )
-        }
+                """
+                .trimIndent(),
+        )
+      }
     }

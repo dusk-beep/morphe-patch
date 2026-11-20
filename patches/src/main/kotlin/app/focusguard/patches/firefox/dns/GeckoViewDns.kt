@@ -46,44 +46,46 @@ private val runtimeCreateFingerprint =
     )
 
 internal fun forceGeckoViewDns(url: String) {
-    val setMode = setTrrModeFingerprint.method
-    val setUri = setTrrUriFingerprint.method
-    val setExcluded = setTrrExcludedDomainsFingerprint.method
+  val setMode = setTrrModeFingerprint.method
+  val setUri = setTrrUriFingerprint.method
+  val setExcluded = setTrrExcludedDomainsFingerprint.method
 
-    setMode.addInstructions(
-        0,
-        "const/4 p1, 0x3",
-    )
+  setMode.addInstructions(
+      0,
+      "const/4 p1, 0x3",
+  )
 
-    setUri.addInstructions(
-        0,
-        """const-string p1, "$url"""",
-    )
+  setUri.addInstructions(
+      0,
+      """const-string p1, "$url"""",
+  )
 
-    setExcluded.addInstructions(
-        0,
-        """
-        invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
-        move-result-object p1
-        """.trimIndent(),
-    )
+  setExcluded.addInstructions(
+      0,
+      """
+      invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
+      move-result-object p1
+      """
+          .trimIndent(),
+  )
 
-    val create = runtimeCreateFingerprint.method
+  val create = runtimeCreateFingerprint.method
 
-    val parameterRegisters =
-        create.parameterTypes.size + if (AccessFlags.STATIC.isSet(create.accessFlags)) 0 else 1
+  val parameterRegisters =
+      create.parameterTypes.size + if (AccessFlags.STATIC.isSet(create.accessFlags)) 0 else 1
 
-    if (create.implementation!!.registerCount <= parameterRegisters) {
-        throw PatchException("$GECKO_RUNTIME->create has no local register")
-    }
+  if (create.implementation!!.registerCount <= parameterRegisters) {
+    throw PatchException("$GECKO_RUNTIME->create has no local register")
+  }
 
-    create.addInstructions(
-        0,
-        """
+  create.addInstructions(
+      0,
+      """
         const/4 v0, 0x3
         invoke-virtual {p1, v0}, $GECKO_RUNTIME_SETTINGS->${setMode.name}(I)${setMode.returnType}
         const-string v0, "$url"
         invoke-virtual {p1, v0}, $GECKO_RUNTIME_SETTINGS->${setUri.name}(Ljava/lang/String;)${setUri.returnType}
-        """.trimIndent(),
-    )
+        """
+          .trimIndent(),
+  )
 }
