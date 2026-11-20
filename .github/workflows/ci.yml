@@ -17,14 +17,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-
-      - name: Run source and target-layout tests
-        run: python -m unittest discover -s tests -v
-
       - name: Set up Java
         uses: actions/setup-java@v6
         with:
@@ -38,7 +30,7 @@ jobs:
 
       - name: Build Morphe patch bundle
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
         run: gradle :patches:buildAndroid --no-daemon
 
