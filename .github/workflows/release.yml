@@ -44,7 +44,7 @@ jobs:
             "version": "${TAG#v}",
             "created_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
             "description": "Release ${TAG} of Focus Guard Patches",
-            "download_url": "https://github.com/${{ github.repository }}/releases/latest/download/focus-guard-patches.mpp",
+            "download_url": "https://github.com/${{ github.repository }}/releases/latest/download/patches.mpp",
             "signature_download_url": ""
           }
           EOF
