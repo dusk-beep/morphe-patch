@@ -20,24 +20,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4 # FIXED: v4 is the current stable version
+        uses: actions/checkout@v7
 
       - name: Set up Java
-        uses: actions/setup-java@v4 # FIXED: v4 is the current stable version
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "21"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4 # FIXED: v4 is the current stable version
+        uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-version: "8.10" # FIXED: 9.8.2 does not exist yet. Use "8.10" or "wrapper"
+          gradle-version: "9.8.2"
 
       - name: Build Morphe patch bundle
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-        run: ./gradlew :patches:buildAndroid --no-daemon # Use ./gradlew for reliability
+        run: gradlew :patches:buildAndroid --no-daemon
 
       - name: Standardize .mpp filename
         run: |
