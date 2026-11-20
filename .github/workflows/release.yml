@@ -60,7 +60,7 @@ jobs:
             patches-bundle.json
 
       - name: Commit metadata to repository
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           branch: main # Force commit to main, avoiding detached HEAD issues from tags
           commit_message: "chore: update patches-bundle.json [skip ci]"
