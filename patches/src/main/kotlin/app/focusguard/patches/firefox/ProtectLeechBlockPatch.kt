@@ -10,7 +10,6 @@ import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
 import app.morphe.util.cloneMutable
 import app.morphe.util.transformMethods
 
-@Suppress("unused")
 val protectLeechBlockPatch =
     patch(
         name = "Protect LeechBlock NG",

@@ -5,7 +5,7 @@ import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility
-import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.patch.patch
 import app.focusguard.patches.firefox.dns.dnsFilterOptions
 import app.focusguard.patches.firefox.dns.forceGeckoViewDns
 
@@ -23,8 +23,7 @@ private val getDohSettingsModeFingerprint = Fingerprint(
     parameters = emptyList(),
 )
 
-@Suppress("unused")
-val dnsFilterPatch = bytecodePatch(
+val dnsFilterPatch = patch(
     name = "DNS filter",
     description = "Forces a custom DNS-over-HTTPS resolver in strict mode.",
     default = false,

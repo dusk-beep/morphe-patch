@@ -2,7 +2,6 @@ package app.focusguard.patches.firefox.dns
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
-import app.morphe.patcher.patch.BytecodePatchContext
 import app.morphe.patcher.patch.PatchException
 import com.android.tools.smali.dexlib2.AccessFlags
 
@@ -45,7 +44,7 @@ private val runtimeCreateFingerprint = Fingerprint(
     ),
 )
 
-internal fun BytecodePatchContext.forceGeckoViewDns(url: String) {
+internal fun forceGeckoViewDns(url: String) {
     val setMode = setTrrModeFingerprint.method
     val setUri = setTrrUriFingerprint.method
     val setExcluded = setTrrExcludedDomainsFingerprint.method
