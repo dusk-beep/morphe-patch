@@ -42,7 +42,7 @@ jobs:
           cat <<EOF > patches-bundle.json
           {
             "version": "${TAG#v}",
-            "created_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "created_at": "$(date -u +"%Y-%m-%dT%H:%M:%S")",
             "description": "Release ${TAG} of Focus Guard Patches",
             "download_url": "https://github.com/${{ github.repository }}/releases/latest/download/patches.mpp",
             "signature_download_url": ""
