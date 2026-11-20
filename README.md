@@ -25,8 +25,6 @@ The patch is intentionally compatible only with Firefox `160.0`. Do not broaden 
 
 ## Build
 
-Before publishing this as your own repository, replace the `your-name` placeholder in `patches/build.gradle.kts` with your GitHub username.
-
 Prerequisites:
 
 - JDK 21
